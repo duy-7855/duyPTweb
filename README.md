@@ -47,30 +47,52 @@ Mỗi website sử dụng một thư mục HTML riêng.
 
 ## 3.1. Tạo API bằng Node-RED
 
-Sử dụng các node:
+## 3.1. Tạo API bằng Node-RED
+
+Sử dụng Node-RED để xây dựng API đơn giản theo yêu cầu của bài tập.
+
+Mỗi API được xây dựng bằng 3 node:
 
 HTTP In
 → Function
 → HTTP Response
 
-API:
+### API cho Website 1
 
-GET /api/tacke
+Phương thức:
 
-Kết quả:
+GET
+
+Đường dẫn:
+
+/api/site1/students
+
+API trả về dữ liệu JSON:
 
 ```json
 {
     "ok": 1,
-    "msg": "thành công",
+    "website": "Website 1",
     "dssv": [
         {
-            "name": "Duy",
+            "name": "Nguyễn Văn Duy",
             "money": 123
         },
         {
-            "name": "David",
+            "name": "Trần Văn An",
             "money": 456
+        },
+        {
+            "name": "Lê Văn Bình",
+            "money": 789
+        },
+        {
+            "name": "Phạm Thị Hoa",
+            "money": 321
+        },
+        {
+            "name": "Đỗ Văn Nam",
+            "money": 654
         }
     ]
 }

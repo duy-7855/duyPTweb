@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Website 1 - API Node-RED</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: #f2f5f9;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #1f4e79;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #1f4e79;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 25px;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: #1f4e79;
+            color: white;
+        }
+
+        #thongbao {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        pre {
+            background: #f4f4f4;
+            padding: 15px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Website 1</h1>
+
+        <h2>Danh sách sinh viên</h2>
+
+        <button onclick="layDuLieu()">
+            Lấy dữ liệu từ API
+        </button>
+
+        <p id="thongbao"></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên</th>
+                    <th>Money</th>
+                </tr>
+            </thead>
+
+            <tbody id="danhsach">
+            </tbody>
+        </table>
+
+        <h3>Dữ liệu JSON từ Node-RED</h3>
+
+        <pre id="json"></pre>
+
+    </div>
+
+    <script>
+
+        function layDuLieu() {
+
+            document.getElementById("thongbao").innerText =
+                "Đang lấy dữ liệu...";
+
+           fetch("/api/site1/students") 
+
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error("API trả về lỗi");
+                    }
+
+                    return response.json();
+
+                })
+
+                .then(data => {
+
+                    console.log("Dữ liệu API:", data);
+
+                    if (data.ok === 1) {
+
+                        document.getElementById("thongbao").innerText =
+                            data.msg;
+
+                        let html = "";
+
+                        data.dssv.forEach(function (sv, index) {
+
+                            html += `
+                                <tr>
+                                    <td>${index + 1}</td>
+                                    <td>${sv.name}</td>
+                                    <td>${sv.money}</td>
+                                </tr>
+                            `;
+
+                        });
+
+                        document.getElementById("danhsach").innerHTML = html;
+
+                        document.getElementById("json").textContent =
+                            JSON.stringify(data, null, 4);
+
+                    } else {
+
+                        document.getElementById("thongbao").innerText =
+                            "API không trả về dữ liệu hợp lệ.";
+
+                    }
+
+                })
+
+                .catch(error => {
+
+                    console.error("Lỗi:", error);
+
+                    document.getElementById("thongbao").innerText =
+                        "Không thể kết nối đến API.";
+
+                });
+
+        }
+
+    </script>
+
+</body>
+
+</html>

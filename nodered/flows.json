@@ -1,0 +1,115 @@
+[
+    {
+        "id": "api_flow",
+        "type": "tab",
+        "label": "API Sinh Vien",
+        "disabled": false,
+        "info": "API Node-RED cho bai tap lap trinh web"
+    },
+    {
+        "id": "2132d0b53a1e6ac9",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "http_in_tacke",
+        "type": "http in",
+        "z": "api_flow",
+        "name": "API Tacke",
+        "url": "/api/site1/students",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "function_tacke"
+            ]
+        ]
+    },
+    {
+        "id": "function_tacke",
+        "type": "function",
+        "z": "api_flow",
+        "name": "Xu ly du lieu",
+        "func": "msg.payload = {\n    ok: 1,\n    website: \"Website 1\",\n    dssv: [\n        {\n            name: \"Nguyễn Văn Duy\",\n            money: 123\n        },\n        {\n            name: \"Trần Văn An\",\n            money: 456\n        },\n        {\n            name: \"Lê Văn Bình\",\n            money: 789\n        },\n        {\n            name: \"Phạm Thị Hoa\",\n            money: 321\n        },\n        {\n            name: \"Đỗ Văn Nam\",\n            money: 654\n        }\n    ]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 120,
+        "wires": [
+            [
+                "http_response_tacke"
+            ]
+        ]
+    },
+    {
+        "id": "http_response_tacke",
+        "type": "http response",
+        "z": "api_flow",
+        "name": "Tra JSON",
+        "statusCode": "",
+        "headers": {},
+        "x": 600,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "6c7ef8bc2ce88d59",
+        "type": "function",
+        "z": "2132d0b53a1e6ac9",
+        "name": "function 1",
+        "func": "msg.payload = {\n    ok: 1,\n    website: \"Website 2\",\n    dssv: [\n        {\n            name: \"Nguyễn Thị Mai\",\n            money: 900\n        },\n        {\n            name: \"Vũ Văn Hùng\",\n            money: 800\n        },\n        {\n            name: \"Bùi Thị Lan\",\n            money: 700\n        },\n        {\n            name: \"Hoàng Văn Minh\",\n            money: 600\n        },\n        {\n            name: \"Đặng Thị Hương\",\n            money: 500\n        },\n        {\n            name: \"Phan Văn Long\",\n            money: 400\n        }\n    ]\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 180,
+        "wires": [
+            [
+                "165e26c159f1369f"
+            ]
+        ]
+    },
+    {
+        "id": "a713de01059b030c",
+        "type": "http in",
+        "z": "2132d0b53a1e6ac9",
+        "name": "api duy",
+        "url": "/api/site2/students",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "6c7ef8bc2ce88d59"
+            ]
+        ]
+    },
+    {
+        "id": "165e26c159f1369f",
+        "type": "http response",
+        "z": "2132d0b53a1e6ac9",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 470,
+        "y": 180,
+        "wires": []
+    }
+]

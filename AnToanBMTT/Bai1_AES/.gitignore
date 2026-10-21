@@ -1,0 +1,9 @@
+﻿.venv/
+keys/
+*.key
+test_*.bin
+*.bin.enc
+*.bin.dec
+*.enc
+*.dec
+__pycache__/
